@@ -2,7 +2,7 @@
 
 Distinctive tags for cloud resources.
 
-Pseudo-random generator, pre-populated with samples for a substring with one million variants, themed for concepts like cloud, bucket and blob. Outputs as JSON for easier use with infrastructure-as-code tools including Terraform (see [Example](#example) below).
+Pseudorandom generator, pre-populated with samples for a substring with one million variants, themed for concepts like cloud, bucket and blob. Outputs as JSON for easier use with infrastructure-as-code tools including Terraform (see [Example](#example) below).
 
 ## Why?
 
@@ -10,19 +10,19 @@ To avoid the need for less human-readable subtrings like UUIDs.
 
 ## How?
 
-Most simply, just run the command:
+Most simply, just run the base command:
 
 ```shell
 clag
 ```
 
-Optionally, pass in any substrings to begin the sequence, in the order they should appear:
+Optionally, pass in any useful substrings to begin the sequence, in the order they should appear:
 
 ```shell
 clag cloud 1
 ```
 
-This outputs a string prefixed with 'cloud-1-', e.g. 'cloud-1-spectral-bit-spittoon'.
+This outputs a string prefixed with 'cloud-1-'. If the pseudorandomly selected elements of the string are 'spectral', 'bit' and 'spittoon', the whole is 'cloud-1-spectral-bit-spittoon'.
 
 For more than one output string at a time, apply the `--number` / `-n` option:
 
@@ -42,10 +42,11 @@ This outputs a map with a single value keyed by default under 'string' and multi
 
 #### Terraform
 
-Single string output can be generated and applied via Terraform data blocks using the `--json` / `-j` option. For a generic cloud resource:
+Single string output can be generated and applied via Terraform data blocks using the `--json` / `-j` option.
+
+For a generic cloud resource:
 
 ```hcl
-...
 
 data "external" "cool-bin-tag" {
   program = ["clag", "-j", "cloud", "1"]
@@ -55,7 +56,6 @@ resource "<resource_type>" "cool-bin" {
   <resource_argument_key> = data.external.cool-bin-tag.result.string
 }
 
-...
 ```
 
 ## Source
